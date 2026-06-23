@@ -1,9 +1,13 @@
 const { Telegraf } = require("telegraf");
+const { handlersInitialize } = require("./handlers");
 const { botToken } = require("../config");
 
+const bot = new Telegraf(botToken);
 
 function createBot(){
-    return new Telegraf(botToken);
+    handlersInitialize();
+    return bot;
 }
 
-module.exports = { createBot }
+
+module.exports = { createBot, bot }
