@@ -1,7 +1,7 @@
 const { Context } = require("telegraf");
-const { bot } = require("../bot.js");
+const { bot } = require("../bot");
 const { MENU_CALLBACK, BACK_TO_MENU_CALLBACK } = require("../../config/constants")
-const { mainMenuKeyboard } = require("../keyboards/mainMenu.js")
+const { mainMenuKeyboard } = require("../keyboards/mainMenu")
 
 /**
 * @param {Context} ctx

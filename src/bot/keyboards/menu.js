@@ -20,4 +20,4 @@ const backToMenuKeyboard = {
 };
 
 
-module.exports = { menuKeyboard, backToMenuKeyboard };
+module.exports = { menuKeyboard, backToMenuKeyboard, backToMenuRow };
