@@ -18,5 +18,7 @@ async function generateResumeHandler(ctx){
     {
         parse_mode: "HTML"
     })
+
+    await ctx.answerCbQuery();
 }
 bot.action(GENERATE_RESUME_CALLBACK, generateResumeHandler);

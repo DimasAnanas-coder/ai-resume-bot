@@ -1,20 +1,21 @@
-const { PRICES, PAYMENT_CALLBACK } = require("../../config/constants")
+const { PRICES, PAYMENT_CALLBACK, PAY_CHOOSEN_TARIFF_CALLBACK } = require("../../config/constants");
+const { consLog } = require("../../utils/consLog");
 const { backToMenuRow } = require("./menu")
 
 function buildPricesKeyboard() {
     let buttons = [];
-    for (const index of PRICES){
-        const priceObj = PRICES[index];
-        const button = {text: `${obj.cost}р - ${obj.resumeCount}`, callback_data: `payTariff:${index}`};
-        if (buttonsCount % 2){
+    for (const [index, priceObj] of PRICES.entries()){
+        const button = {text: `${priceObj.cost}р - ${priceObj.resumeCount}`, callback_data: `${PAY_CHOOSEN_TARIFF_CALLBACK}:${index}`};
+        if (!(index % 2)){
             buttons.push([button]);
         } else{
-            buttons.last.push(button);
+            buttons.last().push(button);
         }
     }
+
     return {
         inline_keyboard: [
-            buttons,
+            ...buttons,
             backToMenuRow
         ]
     }
