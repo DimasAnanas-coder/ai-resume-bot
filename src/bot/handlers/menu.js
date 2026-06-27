@@ -15,7 +15,6 @@ async function menuHandle(ctx, sendFunc){
 Вы можете пополнить баланс по кнопке ниже`,
         { reply_markup: mainMenuKeyboard }
     );
-    await ctx.answerCbQuery();
 }
 
 /**
@@ -23,6 +22,7 @@ async function menuHandle(ctx, sendFunc){
 */
 async function entryToMenuHandle(ctx){
     await menuHandle(ctx, ctx.reply);
+    await ctx.answerCbQuery();
 }
 bot.action(MENU_CALLBACK, entryToMenuHandle);
 
@@ -32,5 +32,14 @@ bot.action(MENU_CALLBACK, entryToMenuHandle);
 */
 async function backToMenuHandle(ctx){
     await menuHandle(ctx, ctx.editMessageText);
+    await ctx.answerCbQuery();
 }
 bot.action(BACK_TO_MENU_CALLBACK, backToMenuHandle);
+
+/**
+* @param {Context} ctx
+*/
+async function commandMenuHandle(ctx){
+    await menuHandle(ctx, ctx.reply);
+}
+bot.command("menu", commandMenuHandle);
