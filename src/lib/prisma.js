@@ -1,3 +1,4 @@
+const { PrismaClient } = require("@prisma/client");
 const { database } = require("../config/");
 const { consLog } = require("../utils/consLog");
 
@@ -17,4 +18,23 @@ function buildDatabaseURL(){
     return url;
 }
 
-module.exports = { buildDatabaseURL };
+const globalForPrisma = global;
+
+/**
+ * Создает клиент Призмы ORM
+ * @returns { PrismaClient }
+ */
+function setPrisma(){
+    globalForPrisma.prisma = globalForPrisma.prisma || new PrismaClient();
+    return globalForPrisma.prisma;
+}
+
+/**
+ * Экземпляр PrismaClient для работы с базой данных
+ * @type {PrismaClient}
+ */
+const prisma = setPrisma(); 
+
+p
+
+module.exports = { buildDatabaseURL, prisma };

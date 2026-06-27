@@ -1,12 +1,16 @@
 const { Context } = require("telegraf");
 const { bot } = require("../bot");
-const { menuKeyboard } = require("../keyboards/menu")
+const { menuKeyboard } = require("../keyboards/menu");
+const { prisma } = require("../../lib/prisma");
 
 
 /**
 * @param {Context} ctx
 */
 async function startHandle(ctx){
+    const userId = ctx.from.id;
+    //prisma.
+
     await ctx.replyWithPhoto(
         { source: "./public/assets/joke.png" },
         { 
