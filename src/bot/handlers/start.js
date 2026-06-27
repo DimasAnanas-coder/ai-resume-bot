@@ -1,6 +1,6 @@
 const { Context } = require("telegraf");
-const { bot } = require("../bot.js");
-const { menuKeyboard } = require("../keyboards/menu.js")
+const { bot } = require("../bot");
+const { menuKeyboard } = require("../keyboards/menu")
 
 
 /**
