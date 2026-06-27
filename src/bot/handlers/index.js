@@ -1,7 +1,7 @@
 function handlersInitialize(){
     require("./start.js");
     require("./menu.js");
-    require("./generate.js");
+    require("./generateResume.js");
     require("./payment.js");
 
 }
