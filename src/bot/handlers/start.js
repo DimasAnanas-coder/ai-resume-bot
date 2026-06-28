@@ -1,7 +1,7 @@
 const { Context } = require("telegraf");
 const { bot } = require("../bot");
 const { menuKeyboard } = require("../keyboards/menu");
-const { prisma } = require("../../lib/prisma");
+const { createNewUser } = require("../../db/users.js")
 
 
 /**
@@ -9,12 +9,13 @@ const { prisma } = require("../../lib/prisma");
 */
 async function startHandle(ctx){
     const userId = ctx.from.id;
-    //prisma.
+    const firstName = ctx.from.first_name;
+    await createNewUser(userId, firstName, 1);
 
     await ctx.replyWithPhoto(
         { source: "./public/assets/joke.png" },
         { 
-            caption: `👋 Привет, <b>${ctx.from.first_name}</b>
+            caption: `👋 Привет, <b>${firstName}</b>
             
 В этом боте ты можешь сгенерировать резюме, которое отправишь роботадателю. Переходи в меню и следуй простой инструкции. Первая попытка бесплатна`,
             reply_markup: menuKeyboard,

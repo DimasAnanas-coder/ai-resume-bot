@@ -2,13 +2,14 @@ const { Context } = require("telegraf");
 const { bot } = require("../bot");
 const { MENU_CALLBACK, BACK_TO_MENU_CALLBACK } = require("../../config/constants")
 const { mainMenuKeyboard } = require("../keyboards/mainMenu")
+const { getResumeCount } = require("../../db/users")
 
 /**
 * @param {Context} ctx
 * @param {CallableFunction} sendFunc
 */
 async function menuHandle(ctx, sendFunc){
-    const resumeAvailableCount = 1;
+    const resumeAvailableCount = getResumeCount(ctx.from.id);
     await sendFunc.call(
         ctx, 
         `Количество доступных резюме: ${resumeAvailableCount}
