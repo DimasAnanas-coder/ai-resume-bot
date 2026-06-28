@@ -3,13 +3,14 @@ const { bot } = require("../bot");
 const { PAYMENT_CALLBACK, PAY_CHOOSEN_TARIFF_CALLBACK, PRICES } = require("../../config/constants")
 const { buildPricesKeyboard, payChoosenTariffKeyboard } = require("../keyboards/payment");
 const { consLog } = require("../../utils/consLog");
+const { PAYMENT_SELECT_TARIFF, PAYMENT_PAY_LINK } = require("../texts/payment");
 
 /**
 * @param {Context} ctx
 */
 async function paymentMenuHandler(ctx){
     await ctx.editMessageText(
-        "Выберите тариф из списка ниже. Вы покупаете то количество резюме, сколько хотите. Ничего лишнего!",
+        PAYMENT_SELECT_TARIFF,
         { reply_markup: buildPricesKeyboard() }
     );
 
@@ -27,7 +28,7 @@ async function payChoosenTarifHandler(ctx){
     consLog(tariffId);
 
     await ctx.editMessageText(
-        "Оплатите по ссылке ниже. Генерации автоматически зачислятся на ваш счет",
+        PAYMENT_PAY_LINK,
         { reply_markup: payChoosenTariffKeyboard(tariffId) }
     );
 

@@ -2,6 +2,7 @@ const { Context } = require("telegraf");
 const { bot } = require("../bot");
 const { menuKeyboard } = require("../keyboards/menu");
 const { createNewUser } = require("../../db/users.js")
+const { startWelcomeCaption } = require("../texts/start");
 
 
 /**
@@ -15,9 +16,7 @@ async function startHandle(ctx){
     await ctx.replyWithPhoto(
         { source: "./public/assets/joke.png" },
         { 
-            caption: `👋 Привет, <b>${firstName}</b>
-            
-В этом боте ты можешь сгенерировать резюме, которое отправишь роботадателю. Переходи в меню и следуй простой инструкции. Первая попытка бесплатна`,
+            caption: startWelcomeCaption(firstName),
             reply_markup: menuKeyboard,
             parse_mode: "HTML"
         }

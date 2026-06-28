@@ -1,11 +1,15 @@
 const { PRICES, PAYMENT_CALLBACK, PAY_CHOOSEN_TARIFF_CALLBACK } = require("../../config/constants");
-const { consLog } = require("../../utils/consLog");
 const { backToMenuRow } = require("./menu")
+const { tariffButtonLabel } = require("../texts/payment");
+const { BUTTON_PAY, BUTTON_BACK_TO_TARIFFS } = require("../texts/buttons");
 
 function buildPricesKeyboard() {
     let buttons = [];
     for (const [index, priceObj] of PRICES.entries()){
-        const button = {text: `${priceObj.cost}р - ${priceObj.resumeCount}`, callback_data: `${PAY_CHOOSEN_TARIFF_CALLBACK}:${index}`};
+        const button = {
+            text: tariffButtonLabel(priceObj.cost, priceObj.resumeCount),
+            callback_data: `${PAY_CHOOSEN_TARIFF_CALLBACK}:${index}`
+        };
         if (!(index % 2)){
             buttons.push([button]);
         } else{
@@ -26,10 +30,10 @@ function payChoosenTariffKeyboard(tariffId) {
     return {
         inline_keyboard: [
             [
-                { text: "Перейти к оплате", url: payUrl }
+                { text: BUTTON_PAY, url: payUrl }
             ],
             [
-                { text: "< Вернуться к тарифам", callback_data: PAYMENT_CALLBACK}
+                { text: BUTTON_BACK_TO_TARIFFS, callback_data: PAYMENT_CALLBACK}
             ]
         ]
     }

@@ -3,6 +3,7 @@ const { bot } = require("../bot");
 const { MENU_CALLBACK, BACK_TO_MENU_CALLBACK } = require("../../config/constants")
 const { mainMenuKeyboard } = require("../keyboards/mainMenu")
 const { getResumeCount } = require("../../db/users")
+const { menuMessage } = require("../texts/menu");
 
 /**
 * @param {Context} ctx
@@ -12,8 +13,7 @@ async function menuHandle(ctx, sendFunc){
     const resumeAvailableCount = getResumeCount(ctx.from.id);
     await sendFunc.call(
         ctx, 
-        `Количество доступных резюме: ${resumeAvailableCount}
-Вы можете пополнить баланс по кнопке ниже`,
+        menuMessage(resumeAvailableCount),
         { reply_markup: mainMenuKeyboard }
     );
 }
