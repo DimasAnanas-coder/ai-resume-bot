@@ -30,19 +30,23 @@ async function createNewUser(userId, firstName, resumeCount=null) {
     
 }
 
-async function getResumeCount(userId){
+async function getUser(userId){
     const userIdBigInt = BigInt(userId);
     try{
-        const user = await prisma.user.findUnique({
+        return await prisma.user.findUnique({
             where: {
                 userId: userIdBigInt
             }
-        })
-    }
-    catch(error){
-        consLog("❌ Ошибка при получении количества генераций", error);
+        });
+    } catch(error){
+        consLog("❌ Ошибка при получении пользователя", error);
         throw new Error("Ошибка в базе данных")
     }
 }
 
-module.exports = { createNewUser };
+async function getResumeCount(userId){
+    const user = await getUser(userId);
+    return user?.resumeCount;
+}
+
+module.exports = { createNewUser, getUser, getResumeCount };

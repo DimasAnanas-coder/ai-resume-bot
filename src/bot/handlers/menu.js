@@ -10,7 +10,7 @@ const { menuMessage } = require("../texts/menu");
 * @param {CallableFunction} sendFunc
 */
 async function menuHandle(ctx, sendFunc){
-    const resumeAvailableCount = getResumeCount(ctx.from.id);
+    const resumeAvailableCount = await getResumeCount(ctx.from.id);
     await sendFunc.call(
         ctx, 
         menuMessage(resumeAvailableCount),
