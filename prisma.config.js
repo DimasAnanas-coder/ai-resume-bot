@@ -1,4 +1,4 @@
-const { buildDatabaseURL } = require("./src/lib/prisma.js")
+const { buildDatabaseURL } = require("./src/utils/buildDatabaseURL.js")
 const { defineConfig } = require("prisma/config");
 
 module.exports = defineConfig({

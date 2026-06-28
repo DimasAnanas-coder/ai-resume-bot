@@ -1,31 +1,20 @@
-const { PrismaClient } = require("@prisma/client");
-const { database } = require("../config/");
-const { consLog } = require("../utils/consLog");
-
-function buildDatabaseURL(){
-    if (!database.user || !database.password || !database.host || !database.port || !database.name) {
-        console.error('❌ Ошибка: отсутствуют данные для подключения к БД');
-        console.error('   user:', database.user || '❌');
-        console.error('   host:', database.host || '❌');
-        console.error('   port:', database.port || '❌');
-        console.error('   name:', database.name || '❌');
-        console.error('   password:', database.password ? '***' : '❌');
-        throw new Error('Недостаточно данных для подключения к базе данных');
-    }
-    
-    const url = `postgresql://${database.user}:${database.password}@${database.host}:${database.port}/${database.name}?schema=public`;
-    consLog('✅ URL собран:', url.replace(/:[^:@]+@/, ':***@')); 
-    return url;
-}
+const { PrismaClient } = require("../../prisma/generated/client");
+const { PrismaPg } = require("@prisma/adapter-pg");
+const { Pool } = require("pg");
+const { buildDatabaseURL } = require("../utils/buildDatabaseURL");
 
 const globalForPrisma = global;
 
 /**
- * Создает клиент Призмы ORM
- * @returns { PrismaClient }
+ * Создает клиент Prisma ORM
+ * @returns {PrismaClient}
  */
-function setPrisma(){
-    globalForPrisma.prisma = globalForPrisma.prisma || new PrismaClient();
+function setPrisma() {
+    if (!globalForPrisma.prisma) {
+        const pool = new Pool({ connectionString: buildDatabaseURL() });
+        const adapter = new PrismaPg(pool);
+        globalForPrisma.prisma = new PrismaClient({ adapter });
+    }
     return globalForPrisma.prisma;
 }
 
@@ -33,8 +22,6 @@ function setPrisma(){
  * Экземпляр PrismaClient для работы с базой данных
  * @type {PrismaClient}
  */
-const prisma = setPrisma(); 
+const prisma = setPrisma();
 
-p
-
-module.exports = { buildDatabaseURL, prisma };
+module.exports = { prisma };
