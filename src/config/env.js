@@ -17,6 +17,10 @@ const database = {
 const env = {
     botToken: process.env.BOT_TOKEN,
     database: database,
+    superAdminIds: (process.env.SUPER_ADMIN_IDS || process.env.SUPERADMINS || "")
+        .split(",")
+        .map((id) => id.trim())
+        .filter(Boolean),
 };
 
 

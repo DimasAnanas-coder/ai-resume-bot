@@ -49,4 +49,34 @@ async function getResumeCount(userId){
     return user?.resumeCount;
 }
 
-module.exports = { createNewUser, getUser, getResumeCount };
+async function setRole(userId, role){
+    const userIdBigInt = BigInt(userId);
+    try{
+        await prisma.user.upsert({
+            where: { userId: userIdBigInt },
+            update: { role: role },
+            create: {
+                userId: userIdBigInt,
+                firstName: "Admin",
+                resumeCount: DEFAULT_RESUME_COUNT,
+                role: role,
+            },
+        });
+    } catch(error){
+        consLog("❌ Ошибка при установке роли пользователя", error);
+        throw new Error("Ошибка в базе данных");
+    }
+}
+
+async function getRole(userId){
+    const user = await getUser(userId);
+    return user?.role;
+}
+
+module.exports = { 
+    createNewUser, 
+    getUser, 
+    getResumeCount,
+    setRole,
+    getRole
+};
