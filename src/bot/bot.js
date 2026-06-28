@@ -2,12 +2,15 @@ const { Telegraf } = require("telegraf");
 const { handlersInitialize } = require("./handlers");
 const { botToken } = require("../config");
 
-const bot = new Telegraf(botToken);
+const globalForBot = global;
 
 function createBot(){
+    if (!globalForBot.bot){
+        globalForBot.bot = new Telegraf(botToken);
+    }
+    module.exports.bot = globalForBot.bot
     handlersInitialize();
-    return bot;
+    return globalForBot.bot;
 }
 
-
-module.exports = { createBot, bot }
+module.exports = { createBot } 
