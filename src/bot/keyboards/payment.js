@@ -13,7 +13,7 @@ function buildPricesKeyboard() {
         if (!(index % 2)){
             buttons.push([button]);
         } else{
-            buttons.last().push(button);
+            buttons.last.push(button);
         }
     }
 
