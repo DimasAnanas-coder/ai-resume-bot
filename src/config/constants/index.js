@@ -1,4 +1,5 @@
 module.exports = { 
     ...require("./callbackData"),
-    ...require("./prices")
+    ...require("./prices"),
+    ...require("./models"),
 }

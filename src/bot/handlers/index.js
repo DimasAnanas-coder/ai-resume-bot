@@ -3,6 +3,7 @@ function handlersInitialize(){
     require("./menu.js");
     require("./buildResume.js");
     require("./payment.js");
+    require("./generate.js");
 
 }
 

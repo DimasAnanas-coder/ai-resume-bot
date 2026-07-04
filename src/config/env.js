@@ -16,6 +16,7 @@ const database = {
 
 const env = {
     botToken: process.env.BOT_TOKEN,
+    geminiApiKey: process.env.GEMINI_API_KEY,
     database: database,
     superAdminIds: process.env.SUPER_ADMIN_IDS
         ?.split(",")
