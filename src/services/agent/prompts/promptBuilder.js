@@ -1,22 +1,19 @@
-const systemPrompts = require('./systemPrompts.json');
-const userPrompts = require('./userPrompts.json');
-
-function buildSchemaPrompt() {
-    return userPrompts.schema.toString();
-}
+const systemPrompts = require("./systemPrompts.json");
+const userPrompts = require("./userPrompts.json");
 
 function buildUserPrompt(userInfo) {
-    let prompt = userPrompts.json_spec.replace('{user_info}', userInfo);
-    prompt += userPrompts.not_required_fields;
-    prompt += buildSchemaPrompt();
-    return prompt;
+    return userPrompts.task.replace("{user_info}", userInfo.trim());
 }
 
 function buildSystemPrompt() {
-    return systemPrompts.personality_identity + systemPrompts.use_json;
+    return [
+        systemPrompts.role,
+        systemPrompts.extraction_rules,
+        systemPrompts.output_rules,
+    ].join("\n\n");
 }
 
 module.exports = {
     buildUserPrompt,
-    buildSystemPrompt
-}
+    buildSystemPrompt,
+};

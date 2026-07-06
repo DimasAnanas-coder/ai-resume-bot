@@ -1,7 +1,7 @@
 const { GoogleGenAI } = require("@google/genai");
 const { geminiApiKey } = require("../../config");
 const { consLog } = require("../../utils/consLog");
-const { model } = require("../../config/constants");
+const { AGENT_MODEL } = require("../../config/constants");
 
 const globalForGemini = global;
 const MAX_RESPONSE_LOG_LENGTH = 200;
@@ -15,7 +15,7 @@ function setGemini(){
 }
 
 
-async function getResponse(userPrompt, systemPrompt=null){
+async function getResponse(userPrompt, systemPrompt=null, configArgs={}){
     let aiGemini = globalForGemini.ai;
     if (!aiGemini) {
         aiGemini = setGemini();
@@ -30,11 +30,11 @@ async function getResponse(userPrompt, systemPrompt=null){
 
     try {
         const content = await aiGemini.models.generateContent({
-            model: model,
+            model: AGENT_MODEL,
             contents: userPrompt,
             config: {
                 systemInstruction: systemPrompt,
-                temperature: 0.4,
+                ...configArgs,
             },
         });
 
