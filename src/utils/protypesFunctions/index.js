@@ -1,1 +1,2 @@
 require("./getLastElemArray");
+require("./capitalizeString");
