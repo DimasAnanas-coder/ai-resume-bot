@@ -7,4 +7,4 @@ function isSuperAdmin(role){
     return role === ROLES.superadmin;
 }
 
-module.exports = { ROLES, isSuperAdminRole };
+module.exports = { ROLES, isSuperAdmin };

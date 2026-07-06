@@ -49,6 +49,11 @@ async function getResumeCount(userId){
     return user?.resumeCount;
 }
 
+/**
+ * 
+ * @param { Int } userId 
+ * @param { String } role 
+ */
 async function setRole(userId, role){
     const userIdBigInt = BigInt(userId);
     try{
@@ -57,7 +62,7 @@ async function setRole(userId, role){
             update: { role: role },
             create: {
                 userId: userIdBigInt,
-                firstName: "Admin",
+                firstName: role.capitalize(),
                 resumeCount: DEFAULT_RESUME_COUNT,
                 role: role,
             },

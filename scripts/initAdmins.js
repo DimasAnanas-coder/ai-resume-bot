@@ -3,6 +3,8 @@ const { superAdminIds } = require("../src/config/env");
 const { consLog } = require("../src/utils/consLog");
 const { ROLES } = require("../src/config/constants/roles");
 
+require("../src/utils/protypesFunctions");
+
 async function initAdmins() {
     for (const superAdminId of superAdminIds) {
         const id = superAdminId.trim();
