@@ -15,25 +15,30 @@ function setGemini(){
 }
 
 
-async function getResponse(prompt){
+async function getResponse(userPrompt, systemPrompt=null){
     let aiGemini = globalForGemini.ai;
     if (!aiGemini) {
         aiGemini = setGemini();
     }
 
-    if (!prompt) {
+    if (!userPrompt) {
         consLog("Запрос к Gemini API пуст");
         return null;
     }
-    consLog("Запрос к Gemini API", prompt);
+    consLog("Запрос к Gemini API", userPrompt);
+    consLog("Системный промпт", systemPrompt);
 
     try {
-        const interaction = await aiGemini.interactions.create({
+        const content = await aiGemini.models.generateContent({
             model: model,
-            input: prompt,
+            contents: userPrompt,
+            config: {
+                systemInstruction: systemPrompt,
+                temperature: 0.4,
+            },
         });
 
-        const responseText = interaction.output_text;
+        const responseText = content.text;
         if (!responseText) {
             consLog("Ответ от Gemini API пуст");
             return null;

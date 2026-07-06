@@ -1,8 +1,8 @@
 const { Context } = require("telegraf");
 const { bot } = require("../bot");
 const { consLog } = require("../../utils/consLog");
-const { getResponse } = require("../../services/api/gemini");
 const { editOrAnswerMessage } = require("../helpers/editOrAnswerMessage");
+const { chatWithAgent } = require("../../services/agent/chatWithagent");
 
 /**
 * @param {Context} ctx
@@ -12,7 +12,7 @@ async function generateResumeHandler(ctx){
 
     let loadingMessage = await ctx.reply("Генерация резюме...");
     consLog("message", typeof loadingMessage);
-    const response = await getResponse(prompt);
+    const response = await chatWithAgent(prompt);
     if (!response) {
         await editOrAnswerMessage(
             ctx, 
