@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../prisma/generated"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole{
+  USER
+  SUPERADMIN 
+}
+
+enum Status{
+  PENDING
+  EXPIRED
+  FAILED
+  SUCCESS
+}
+
+
+model User{
+  userId      BigInt      @id
+  firstName   String
+  resumeCount Int
+  role        UserRole    @default(USER)
+  startedAt   DateTime    @default(now())
+}
+
+// Абстрактная таблица логов
+model Log{
+  id          Int         @id
+  userId      BigInt
+  status      Status      @default(PENDING)
+  createdAt   DateTime    @default(now())
+  updateAt    DateTime    @updatedAt
+
+  // Связь с конкретными типами логов
+  payment     PaymentLog?
+  generation  GenerationLog?
+}
+
+model PaymentLog{
+  id          Int         @id
+  log         Log         @relation(fields: [id], references: [id])
+  tariffId    Int
+  cost        Int
+  resumeCount Int
+}
+
+model GenerationLog{
+  id          Int         @id
+  log         Log         @relation(fields: [id], references: [id])
+  prompt      String
+}

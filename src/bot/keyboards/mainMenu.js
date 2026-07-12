@@ -1,13 +1,14 @@
-const { PAYMENT_CALLBACK, GENERATE_RESUME_CALLBACK } = require("../../config/constants")
+const { PAYMENT_CALLBACK, BUILD_RESUME_CALLBACK } = require("../../config/constants")
+const { BUTTON_CREATE_RESUME, BUTTON_BUY_GENERATIONS } = require("../texts/buttons");
 
 
 const mainMenuKeyboard = {
     inline_keyboard: [
         [ 
-            { text: "Создать резюме", callback_data: GENERATE_RESUME_CALLBACK } 
+            { text: BUTTON_CREATE_RESUME, callback_data: BUILD_RESUME_CALLBACK } 
         ],
         [ 
-            { text: "Купить генерации", callback_data: PAYMENT_CALLBACK } 
+            { text: BUTTON_BUY_GENERATIONS, callback_data: PAYMENT_CALLBACK } 
         ]
     ]
 }
