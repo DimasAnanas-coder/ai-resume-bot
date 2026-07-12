@@ -15,8 +15,13 @@
   "type": "commonjs",
   "main": "src/index.js",
   "scripts": {
+    "start": "node .",
     "dev": "nodemon .",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "docker:up": "docker compose up -d --build",
+    "docker:down": "docker compose down",
+    "docker:logs": "docker compose logs -f app",
+    "docker:restart": "docker compose restart app",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
     "db:studio": "prisma studio",
