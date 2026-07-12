@@ -1,7 +1,7 @@
 const dotenv = require('dotenv');
 
 const result = dotenv.config();
-if (result.error){
+if (result.error && result.error.code !== 'ENOENT') {
     console.error('❌ Ошибка загрузки .env файла:', result.error.message);
     process.exit(1);
 }
