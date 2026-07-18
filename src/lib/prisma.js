@@ -1,7 +1,7 @@
 const { PrismaClient } = require("../../prisma/generated/client");
 const { PrismaPg } = require("@prisma/adapter-pg");
 const { Pool } = require("pg");
-const { buildDatabaseURL } = require("../utils/buildDatabaseURL");
+const { buildPostgresURL } = require("../utils/buildDatabaseURL");
 
 const globalForPrisma = global;
 
@@ -11,7 +11,7 @@ const globalForPrisma = global;
  */
 function setPrisma() {
     if (!globalForPrisma.prisma) {
-        const pool = new Pool({ connectionString: buildDatabaseURL() });
+        const pool = new Pool({ connectionString: buildPostgresURL() });
         const adapter = new PrismaPg(pool);
         globalForPrisma.prisma = new PrismaClient({ adapter });
     }

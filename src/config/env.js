@@ -14,10 +14,19 @@ const database = {
     port: process.env.DB_PORT,
 }
 
+const redis = {
+    user: process.env.REDIS_DB_USER,
+    password: process.env.REDIS_DB_PASSWORD,
+    name: process.env.REDIS_DB_NAME,
+    host: process.env.REDIS_DB_HOST,
+    port: process.env.REDIS_DB_PORT,
+}
+
 const env = {
     botToken: process.env.BOT_TOKEN,
     geminiApiKey: process.env.GEMINI_API_KEY,
     database: database,
+    redis: redis,
     superAdminIds: process.env.SUPER_ADMIN_IDS
         ?.split(",")
         .map((id) => id.trim()),
