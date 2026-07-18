@@ -10,5 +10,6 @@ RUN npm install
 COPY . .
 
 RUN chmod +x scripts/docker-entrypoint.sh
+RUN chmod +x scripts/redis-init.sh
 
 CMD ["sh", "scripts/docker-entrypoint.sh"]
