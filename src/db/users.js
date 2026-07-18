@@ -1,6 +1,8 @@
 const { prisma } = require("../lib/prisma");
 const { DEFAULT_RESUME_COUNT } = require("../config/constants");
 const { consLog } = require("../utils/consLog");
+const { cache } = require("../services/cache");
+const User = require("../models/cache/User");
 
 /**
  * @param(Int) userId
@@ -8,17 +10,16 @@ const { consLog } = require("../utils/consLog");
  * @param(Int?) resumeCount
  */
 async function createNewUser(userId, firstName, resumeCount=null) {
-    const userIdBigInt = BigInt(userId);
     try{
         await prisma.user.upsert({
             where: {
-                userId: userIdBigInt
+                userId: userId
             },
             update: {
                 firstName: firstName,
             },
             create: {
-                userId: userIdBigInt,
+                userId: userId,
                 firstName: firstName,
                 resumeCount: resumeCount || DEFAULT_RESUME_COUNT
             }
@@ -31,17 +32,36 @@ async function createNewUser(userId, firstName, resumeCount=null) {
 }
 
 async function getUser(userId){
-    const userIdBigInt = BigInt(userId);
-    try{
-        return await prisma.user.findUnique({
+    const userModel = new User(userId)
+
+    let user = null;
+    try {
+        user = await cache.get(userModel);
+        if (user){
+            return user;
+        }
+    } catch(error) {
+        consLog("❌ Ошибка при получении кэша", error);
+    }
+
+    try {
+        user = await prisma.user.findUnique({
             where: {
-                userId: userIdBigInt
+                userId: userId
             }
         });
     } catch(error){
         consLog("❌ Ошибка при получении пользователя", error);
         throw new Error("Ошибка в базе данных")
     }
+
+    try {
+        await cache.add(userModel, user);
+    } catch (error) {
+        consLog("❌ Ошибка при записи в кэш", error);
+    }
+    
+    return user;
 }
 
 async function getResumeCount(userId){
@@ -55,13 +75,12 @@ async function getResumeCount(userId){
  * @param { String } role 
  */
 async function setRole(userId, role){
-    const userIdBigInt = BigInt(userId);
     try{
         await prisma.user.upsert({
-            where: { userId: userIdBigInt },
+            where: { userId: userId },
             update: { role: role },
             create: {
-                userId: userIdBigInt,
+                userId: userId,
                 firstName: role.capitalize(),
                 resumeCount: DEFAULT_RESUME_COUNT,
                 role: role,

@@ -1,4 +1,4 @@
-const { buildDatabaseURL } = require("./src/utils/buildDatabaseURL.js")
+const { buildPostgresURL } = require("./src/utils/buildDatabaseURL.js")
 const { defineConfig } = require("prisma/config");
 
 module.exports = defineConfig({
@@ -7,6 +7,6 @@ module.exports = defineConfig({
     path: "prisma/migrations",
   },
   datasource: {
-    url: buildDatabaseURL(),
+    url: buildPostgresURL(),
   },
 });

@@ -1,20 +1,36 @@
-const { database } = require("../config");
+const { database, redis } = require("../config");
 const { consLog } = require("./consLog");
 
-function buildDatabaseURL() {
-    if (!database.user || !database.password || !database.host || !database.port || !database.name) {
+
+/**
+ * 
+ * @param { Object } db 
+ * @param { String } dbType 
+ * @returns 
+ */
+
+function buildDatabaseURL(db, dbType) {
+    if (!db.user || !db.password || !db.host || !db.port || !db.name) {
         console.error('❌ Ошибка: отсутствуют данные для подключения к БД');
-        console.error('   user:', database.user || '❌');
-        console.error('   host:', database.host || '❌');
-        console.error('   port:', database.port || '❌');
-        console.error('   name:', database.name || '❌');
-        console.error('   password:', database.password ? '***' : '❌');
+        console.error('   user:', db.user || '❌');
+        console.error('   host:', db.host || '❌');
+        console.error('   port:', db.port || '❌');
+        console.error('   name:', db.name || '❌');
+        console.error('   password:', db.password ? '***' : '❌');
         throw new Error('Недостаточно данных для подключения к базе данных');
     }
 
-    const url = `postgresql://${database.user}:${database.password}@${database.host}:${database.port}/${database.name}?schema=public`;
+    const url = `${dbType}://${db.user}:${db.password}@${db.host}:${db.port}/${db.name}?schema=public`;
     consLog('✅ URL собран:', url.replace(/:[^:@]+@/, ':***@'));
     return url;
 }
 
-module.exports = { buildDatabaseURL };
+function buildRedisURL() {
+    return buildDatabaseURL(redis, 'redis');
+}
+
+function buildPostgresURL() {
+    return buildDatabaseURL(database, 'postgresql');
+}
+
+module.exports = { buildPostgresURL, buildRedisURL };
