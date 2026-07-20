@@ -1,6 +1,6 @@
 const { Context } = require("telegraf");
 const { bot } = require("../bot");
-const { PAYMENT_CALLBACK, PAY_CHOOSEN_TARIFF_CALLBACK, PRICES } = require("../../config/constants")
+const { PAYMENT_CALLBACK, PAY_CHOOSEN_TARIFF_CALLBACK, PRICES, findTariff } = require("../../config/constants")
 const { buildPricesKeyboard, payChoosenTariffKeyboard } = require("../keyboards/payment");
 const { consLog } = require("../../utils/consLog");
 const { PAYMENT_SELECT_TARIFF, PAYMENT_PAY_LINK } = require("../texts/payment");
@@ -19,24 +19,32 @@ async function paymentMenuHandler(ctx){
 bot.action(PAYMENT_CALLBACK, paymentMenuHandler);
 
 
+function parseTariff(ctx) {
+    const cbData = ctx.callbackQuery.data;
+    const tariffId = cbData.split(":")[1];
+    consLog(`ID тарифа: ${tariffId}`);
+
+    return findTariff(tariffId);
+}
+
 /**
 * @param {Context} ctx
 */
 async function payChoosenTarifHandler(ctx){
-    const cbData = ":4"; //ctx.callbackQuery.data;
-    const tariffId = cbData.split(":")[1];
-    consLog(tariffId);
+    const tariff = parseTariff(ctx);
+    if (!tariff) {
+        consLog("Данный тариф не существует", ctx.callbackQuery.data);
+        await ctx.answerCbQuery();
+        return;
+    }
 
     await ctx.editMessageText(
-        PAYMENT_PAY_LINK,
-        { reply_markup: payChoosenTariffKeyboard(tariffId) }
+        PAYMENT_PAY_LINK(tariff),
+        { reply_markup: payChoosenTariffKeyboard(tariff) }
     );
 
     await ctx.answerCbQuery();
 }
-
-//bot.action((ctx) => {ctx.callbackQuery.data.startsWith()}, payChoosenTarifHandler);
-
-for (let i = 0; i < PRICES.length; i ++){
-    bot.action(`${PAY_CHOOSEN_TARIFF_CALLBACK}:${i}`, payChoosenTarifHandler);
-}
+PRICES.forEach(tariff => {
+    bot.action(`${PAY_CHOOSEN_TARIFF_CALLBACK}:${tariff.id}`, payChoosenTarifHandler);
+});

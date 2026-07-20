@@ -5,10 +5,10 @@ const { BUTTON_PAY, BUTTON_BACK_TO_TARIFFS } = require("../texts/buttons");
 
 function buildPricesKeyboard() {
     let buttons = [];
-    for (const [index, priceObj] of PRICES.entries()){
+    for (const [index, tariff] of PRICES.entries()){
         const button = {
-            text: tariffButtonLabel(priceObj.cost, priceObj.resumeCount),
-            callback_data: `${PAY_CHOOSEN_TARIFF_CALLBACK}:${index}`
+            text: tariffButtonLabel(tariff),
+            callback_data: `${PAY_CHOOSEN_TARIFF_CALLBACK}:${tariff.id}`
         };
         if (!(index % 2)){
             buttons.push([button]);
