@@ -1,6 +1,6 @@
-const { Context } = require("telegraf");
-const { Message } = require("telegraf/types");
-const { consLog } = require("../../utils/consLog");
+const { Context } = require('telegraf');
+const { Message } = require('telegraf/types');
+const { consLog } = require('../../utils/consLog');
 
 /**
 * @param {Context} ctx
@@ -9,9 +9,9 @@ const { consLog } = require("../../utils/consLog");
 * @returns {Message}
 */
 async function editOrAnswerMessage(
-    ctx, 
-    messageText, 
-    oldMessage, 
+    ctx,
+    messageText,
+    oldMessage,
     ...args
 ){
     let newMessage = oldMessage;
@@ -22,13 +22,13 @@ async function editOrAnswerMessage(
                 oldMessage.message_id,
                 undefined,
                 messageText,
-                ...args
+                ...args,
             );
         } else {
             newMessage = await ctx.reply(messageText, ...args);
         }
     } catch (error) {
-        consLog("Ошибка при редактировании или ответе сообщения", error);
+        consLog('Ошибка при редактировании или ответе сообщения', error);
         newMessage = await ctx.reply(messageText, ...args);
     }
     return newMessage;

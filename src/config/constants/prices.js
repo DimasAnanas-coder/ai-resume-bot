@@ -1,5 +1,5 @@
-const Tariff = require("../../models/Tariff");
-const { consLog } = require("../../utils/consLog");
+const Tariff = require('../../models/Tariff');
+const { consLog } = require('../../utils/consLog');
 
 const PRICES = [
     new Tariff(99, 2),
@@ -8,13 +8,13 @@ const PRICES = [
     new Tariff(790, 18),
     new Tariff(990, 22),
     new Tariff(1290, 30),
-]
+];
 
-const DEFAULT_RESUME_COUNT = 1
+const DEFAULT_RESUME_COUNT = 1;
 
 /**
  * Функия для получения тарифа по его ID
- * @param { Number } id 
+ * @param { Number } id
  * @returns { Tariff? }
  */
 function findTariff(id) {
@@ -28,4 +28,4 @@ function findTariff(id) {
     return null;
 }
 
-module.exports = {PRICES, DEFAULT_RESUME_COUNT, findTariff}
+module.exports = { PRICES, DEFAULT_RESUME_COUNT, findTariff };

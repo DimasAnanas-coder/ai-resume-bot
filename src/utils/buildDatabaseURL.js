@@ -1,12 +1,12 @@
-const { database, redis } = require("../config");
-const { consLog } = require("./consLog");
+const { database, redis } = require('../config');
+const { consLog } = require('./consLog');
 
 
 /**
- * 
- * @param { Object } db 
- * @param { String } dbType 
- * @returns 
+ *
+ * @param { Object } db
+ * @param { String } dbType
+ * @returns
  */
 
 function buildDatabaseURL(db, dbType) {

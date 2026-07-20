@@ -12,7 +12,7 @@ const database = {
     name: process.env.DB_NAME,
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
-}
+};
 
 const redis = {
     user: process.env.REDIS_DB_USER,
@@ -20,7 +20,7 @@ const redis = {
     name: process.env.REDIS_DB_NAME,
     host: process.env.REDIS_DB_HOST,
     port: process.env.REDIS_DB_PORT,
-}
+};
 
 const env = {
     botToken: process.env.BOT_TOKEN,
@@ -28,7 +28,7 @@ const env = {
     database: database,
     redis: redis,
     superAdminIds: process.env.SUPER_ADMIN_IDS
-        ?.split(",")
+        ?.split(',')
         .map((id) => id.trim()),
 };
 

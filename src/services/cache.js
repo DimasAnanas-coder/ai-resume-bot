@@ -4,8 +4,8 @@ const { consLog } = require('../utils/consLog');
 const delay = require('../utils/delay');
 const BaseCacheModel = require('../models/cache/BaseCacheModel');
 
-const COUNT_ATTEMPT_CONNECT = 3
-const TIME_SLEEP_ATTEMPT_CONNECT_MS = 2000
+const COUNT_ATTEMPT_CONNECT = 3;
+const TIME_SLEEP_ATTEMPT_CONNECT_MS = 2000;
 
 class Cache {
     static _instance = null;
@@ -46,29 +46,29 @@ class Cache {
                 this.connected = true;
                 break;
             } catch(error) {
-                consLog("❌ Ошибка при подключении", error);
+                consLog('❌ Ошибка при подключении', error);
                 await delay(TIME_SLEEP_ATTEMPT_CONNECT_MS);
             }
         }
 
         if (!this.connected){
-            throw new Error(`Ошибка при подключении к ${this.name}`)
+            throw new Error(`Ошибка при подключении к ${this.name}`);
         }
         consLog(`✅ Подключено к ${this.name}`);
     }
 
     /**
-     * 
-     * @param { BaseCacheModel } model 
+     *
+     * @param { BaseCacheModel } model
      * @returns { String }
      */
     buildKey(model) {
-        return `${model.name}:${model.id}`
+        return `${model.name}:${model.id}`;
     }
 
     #serialize(value) {
         return JSON.stringify(value, (key, val) => {
-            if (typeof val === "bigint"){
+            if (typeof val === 'bigint'){
                 val = Number(val);
             }
             return val;
@@ -83,16 +83,16 @@ class Cache {
         try {
             return JSON.parse(value);
         } catch (error){
-            consLog("❌ Ошибка при десериализации закешированных данных", value);
+            consLog('❌ Ошибка при десериализации закешированных данных', value);
             return null;
         }
     }
 
     /**
-     * 
-     * @param { BaseCacheModel } model 
-     * @param { Any } value 
-     * @param { Number } ttl 
+     *
+     * @param { BaseCacheModel } model
+     * @param { Any } value
+     * @param { Number } ttl
      */
     async add(model, value, ttl = 0) {
         if (!this.connected) {
@@ -107,13 +107,13 @@ class Cache {
         } else {
             await this.client.set(key, serializeValue);
         }
-        consLog(`✅ Кэш записал данные в ${this.name}. key=${key}, value=${serializeValue}`)
+        consLog(`✅ Кэш записал данные в ${this.name}. key=${key}, value=${serializeValue}`);
     }
 
     /**
-     * 
-     * @param { BaseCacheModel } model 
-     * @returns 
+     *
+     * @param { BaseCacheModel } model
+     * @returns
      */
     async get(model) {
         if (!this.connected) {
@@ -124,14 +124,14 @@ class Cache {
         const value = await this.client.get(key);
         const deserealizeValue = this.#deserealize(value);
 
-        consLog(`✅ Кэш получил данные из ${this.name}. key=${key}, value=${value}`)
+        consLog(`✅ Кэш получил данные из ${this.name}. key=${key}, value=${value}`);
 
         return deserealizeValue;
     }
 
     /**
-     * 
-     * @param {BaseCacheModel} model 
+     *
+     * @param {BaseCacheModel} model
      */
     async delete(model) {
         if (!this.connected) {
@@ -140,10 +140,10 @@ class Cache {
         const key = this.buildKey(model);
 
         await this.client.del(key);
-        consLog(`✅ Кэш удалил данные из ${this.name}. key=${key}`)
+        consLog(`✅ Кэш удалил данные из ${this.name}. key=${key}`);
     }
 }
 
 const cache = new Cache();
 
-module.exports = {cache}
+module.exports = { cache };
