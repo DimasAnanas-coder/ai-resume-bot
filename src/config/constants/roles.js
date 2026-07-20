@@ -1,4 +1,4 @@
-ROLES = {
+const ROLES = {
     user: "USER",
     superadmin: "SUPERADMIN",
 }
