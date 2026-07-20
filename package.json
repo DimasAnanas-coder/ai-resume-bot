@@ -17,6 +17,8 @@
   "scripts": {
     "start": "node .",
     "dev": "nodemon .",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "test": "echo \"Error: no test specified\" && exit 1",
     "docker:up": "docker compose up -d --build",
     "docker:down": "docker compose down",
@@ -29,6 +31,7 @@
     "db:initadmin": "node scripts/initAdmins.js"
   },
   "devDependencies": {
+    "eslint": "^10.7.0",
     "nodemon": "^3.1.14",
     "prisma": "^7.8.0"
   },
