@@ -8,7 +8,7 @@ function hash(str) {
     for (let i = 0; i < str.length; i ++) {
         const charCode = str.charCodeAt(i);
         hashNumber = (hashNumber << 5 + hashNumber) + charCode;
-        hash = hash & hash;
+        hashNumber = hashNumber & hashNumber;
     }
     return hashNumber;
 }
