@@ -13,10 +13,9 @@ async function startHandle(ctx){
     const firstName = ctx.from.first_name;
     await createNewUser(userId, firstName);
 
-    await ctx.replyWithPhoto(
-        { source: './public/assets/joke.png' },
+    await ctx.reply(
+        startWelcomeCaption(firstName),
         {
-            caption: startWelcomeCaption(firstName),
             reply_markup: menuKeyboard,
             parse_mode: 'HTML',
         },
