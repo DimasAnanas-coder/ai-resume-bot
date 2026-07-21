@@ -13,4 +13,5 @@ function createBot(){
     return globalForBot.bot;
 }
 
+// Функция createBot дополнительно добавлет в экспорт объект бота
 module.exports = { createBot };

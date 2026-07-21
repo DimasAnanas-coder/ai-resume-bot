@@ -5,7 +5,7 @@ function main(){
     require('./utils/protypesFunctions');
     consLog('Прототипированные утилиты классов успешно применены');
 
-    bot = createBot();
+    const bot = createBot();
     consLog('Бот успешно собран');
 
     bot.launch();
