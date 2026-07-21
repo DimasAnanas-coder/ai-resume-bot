@@ -1,2 +1,2 @@
-require("./getLastElemArray");
-require("./capitalizeString");
+require('./getLastElemArray');
+require('./capitalizeString');

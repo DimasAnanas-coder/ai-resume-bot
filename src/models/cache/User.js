@@ -1,8 +1,8 @@
-const BaseCacheModel = require("./BaseCacheModel");
+const BaseCacheModel = require('./BaseCacheModel');
 
 class User extends BaseCacheModel{
     get name(){
-        return "user"
+        return 'user';
     }
 }
 

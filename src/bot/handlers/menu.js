@@ -1,9 +1,9 @@
-const { Context } = require("telegraf");
-const { bot } = require("../bot");
-const { MENU_CALLBACK, BACK_TO_MENU_CALLBACK } = require("../../config/constants")
-const { mainMenuKeyboard } = require("../keyboards/mainMenu")
-const { getResumeCount } = require("../../db/users")
-const { menuMessage } = require("../texts/menu");
+const { Context } = require('telegraf');
+const { bot } = require('../bot');
+const { MENU_CALLBACK, BACK_TO_MENU_CALLBACK } = require('../../config/constants');
+const { mainMenuKeyboard } = require('../keyboards/mainMenu');
+const { getResumeCount } = require('../../db/users');
+const { menuMessage } = require('../texts/menu');
 
 /**
 * @param {Context} ctx
@@ -12,9 +12,9 @@ const { menuMessage } = require("../texts/menu");
 async function menuHandle(ctx, sendFunc){
     const resumeAvailableCount = await getResumeCount(ctx.from.id);
     await sendFunc.call(
-        ctx, 
+        ctx,
         menuMessage(resumeAvailableCount),
-        { reply_markup: mainMenuKeyboard }
+        { reply_markup: mainMenuKeyboard },
     );
 }
 
@@ -43,4 +43,4 @@ bot.action(BACK_TO_MENU_CALLBACK, backToMenuHandle);
 async function commandMenuHandle(ctx){
     await menuHandle(ctx, ctx.reply);
 }
-bot.command("menu", commandMenuHandle);
+bot.command('menu', commandMenuHandle);

@@ -1,8 +1,8 @@
-const { Context } = require("telegraf");
-const { bot } = require("../bot");
-const { menuKeyboard } = require("../keyboards/menu");
-const { createNewUser } = require("../../db/users.js")
-const { startWelcomeCaption } = require("../texts/start");
+const { Context } = require('telegraf');
+const { bot } = require('../bot');
+const { menuKeyboard } = require('../keyboards/menu');
+const { createNewUser } = require('../../db/users.js');
+const { startWelcomeCaption } = require('../texts/start');
 
 
 /**
@@ -17,8 +17,8 @@ async function startHandle(ctx){
         startWelcomeCaption(firstName),
         {
             reply_markup: menuKeyboard,
-            parse_mode: "HTML"
-        }
+            parse_mode: 'HTML',
+        },
     );
 }
-bot.command("start", startHandle);
+bot.command('start', startHandle);

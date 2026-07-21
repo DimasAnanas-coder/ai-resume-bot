@@ -1,12 +1,31 @@
-PRICES = [
-    {cost: 99, resumeCount: 2},
-    {cost: 290, resumeCount: 7},
-    {cost: 490, resumeCount: 12},
-    {cost: 790, resumeCount: 18},
-    {cost: 990, resumeCount: 22},
-    {cost: 1290, resumeCount: 30}
-]
+const Tariff = require('../../models/Tariff');
+const { consLog } = require('../../utils/consLog');
 
-DEFAULT_RESUME_COUNT = 1
+const PRICES = [
+    new Tariff(99, 2),
+    new Tariff(290, 7),
+    new Tariff(490, 12),
+    new Tariff(790, 18),
+    new Tariff(990, 22),
+    new Tariff(1290, 30),
+];
 
-module.exports = {PRICES, DEFAULT_RESUME_COUNT}
+const DEFAULT_RESUME_COUNT = 1;
+
+/**
+ * Функия для получения тарифа по его ID
+ * @param { Number } id
+ * @returns { Tariff? }
+ */
+function findTariff(id) {
+    consLog(id);
+    for (const tariff of PRICES) {
+        consLog(tariff.id);
+        if (tariff.id.toString() === id.toString()) {
+            return tariff;
+        }
+    }
+    return null;
+}
+
+module.exports = { PRICES, DEFAULT_RESUME_COUNT, findTariff };

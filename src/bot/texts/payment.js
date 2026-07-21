@@ -1,8 +1,16 @@
-const PAYMENT_SELECT_TARIFF = "Выберите тариф из списка ниже. Вы покупаете то количество резюме, сколько хотите. Ничего лишнего!";
-const PAYMENT_PAY_LINK = "Оплатите по ссылке ниже. Генерации автоматически зачислятся на ваш счет";
+const PAYMENT_SELECT_TARIFF = 'Выберите тариф из списка ниже. Вы покупаете то количество резюме, сколько хотите. Ничего лишнего!';
 
-function tariffButtonLabel(cost, resumeCount) {
-    return `${cost}р - ${resumeCount}`;
+
+function PAYMENT_PAY_LINK(tariff){
+    const tariffText = tariffButtonLabel(tariff);
+
+    return `Выбранный тариф: ${tariffText}. Оплатите по ссылке ниже. 
+    
+Генерации автоматически зачислятся на ваш счет`;
+}
+
+function tariffButtonLabel(tariff) {
+    return `${tariff.cost}р - ${tariff.resumeCount}`;
 }
 
 module.exports = {
