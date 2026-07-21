@@ -1,5 +1,5 @@
-const redis = require('redis');
-const { buildRedisURL } = require('../utils/buildDatabaseURL');
+const redisLib = require('redis');
+const { redis } = require('../config');
 const { consLog } = require('../utils/consLog');
 const delay = require('../utils/delay');
 const BaseCacheModel = require('../models/cache/BaseCacheModel');
@@ -22,8 +22,8 @@ class Cache {
 
         consLog(`Пытаюсь создать ${this.name} клиент...`);
         try {
-            this.client = redis.createClient({
-                url: buildRedisURL(),
+            this.client = redisLib.createClient({
+                url: redis.url,
             });
             consLog(`✅ ${this.name} клиент создан`);
         } catch (error) {
