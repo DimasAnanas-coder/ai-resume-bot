@@ -33,7 +33,7 @@ function parseTariff(ctx) {
 async function payChoosenTarifHandler(ctx){
     const tariff = parseTariff(ctx);
     if (!tariff) {
-        consLog('Данный тариф не существует', ctx.callbackQuery.data);
+        consLog('Данный тариф не существует. CB-data колбэка: ', ctx.callbackQuery.data);
         await ctx.answerCbQuery();
         return;
     }

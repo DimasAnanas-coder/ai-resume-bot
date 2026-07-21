@@ -11,8 +11,8 @@ async function generateResumeHandler(ctx){
     const prompt = ctx.message.text;
 
     const loadingMessage = await ctx.reply('Генерация резюме...');
-    consLog('message', typeof loadingMessage);
     const response = await chatWithAgent(prompt);
+
     if (!response) {
         await editOrAnswerMessage(
             ctx,
