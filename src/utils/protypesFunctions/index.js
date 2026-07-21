@@ -1,0 +1,2 @@
+require('./getLastElemArray');
+require('./capitalizeString');
